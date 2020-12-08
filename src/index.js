@@ -1,3 +1,3 @@
 import 'dotenv/config';
 
-console.log("foo");
+import app from './app';
