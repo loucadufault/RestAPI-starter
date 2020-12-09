@@ -1,9 +1,12 @@
 import cors from 'cors';
 import express from 'express';
 
+import 'dotenv/config';
+
 import routes from './routes';
 import { errorHandler, errorLogger } from './middleware/error_handlers';
-import models, { sequelize } from './db';
+import models, { sequelize } from './database';
+import migrate from '../migrations/migrate';
 
 const app = express();
 
@@ -23,20 +26,16 @@ app.use(errorHandler);
 
 const port = process.env.PORT || 3000;
 
-
 sequelize.authenticate().then(() => {
   console.log('Connection has been established successfully.');
 }).catch((e) => {
   console.error('Unable to connect to the database:', e);
 });
 
-// this can be destructive, migrations should be used on production // TODO
-sequelize.sync({ force: true }).then(async () => {
-  console.log("All models were synchronized successfully.");
+migrate(sequelize);
 
-  app.listen(port, () =>
-    console.log(`Listening on port ${port}!`),
-  );
-});
+app.listen(port, () =>
+  console.log(`Listening on port ${port}!`),
+);
 
 export default app;

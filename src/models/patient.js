@@ -4,6 +4,13 @@ const patient = (sequelize, DataTypes) => {
     class Patient extends Model {}
 
     Patient.init({
+        id: {
+            primaryKey: true,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            allowNull: false,
+            
+        },
         email: {
             type: DataTypes.STRING,
             validate: {
