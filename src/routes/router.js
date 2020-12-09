@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import patients from './patients';
 import morgan from 'morgan';
+import HttpError from '../http_error';
 
 const router = Router();
 
@@ -19,11 +20,7 @@ router.use('/patients', patients);
 
 // default route handler middleware
 router.use('*', (req, res, next) => {
-    const err = new Error(`Route '${req.originalUrl}' not supported.`);
-    err.status = 2222;
-    err.code = 'ERR_UNSUPPORTED_ROUTE';
-
-    next(err);
+    next(new HttpError(404, `Route '${req.originalUrl}' not supported.`, 'ERR_UNSUPPORTED_ROUTE'));
 });
 
 export default router;

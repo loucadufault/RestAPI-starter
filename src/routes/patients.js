@@ -21,8 +21,6 @@ router.get('/', async (req, res) => {
         next: fullUrlWithoutQueryString + `?page=${page + 1}`
     };
 
-    console.log(`page: ${page}`);
-
     const patients = await req.context.models.Patient.findAll({ offset: (page - 1) * PAGE_SIZE, limit: PAGE_SIZE });
     return res.status(200).json({
         data: patients.map(patient => patient.getProfile()),
@@ -48,7 +46,6 @@ router.post('/', async (req, res, next) => {
         const patient = await req.context.models.Patient.create(req.body);
         return res.status(201).json(patient.getProfile());
     } catch (e) {
-        console.error(e);
         next(new HttpError({status: 400, detail: 'Required field missing or bad format', code: 'ERR_INVALID_FIELD'}));
     }
 });

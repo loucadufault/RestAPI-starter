@@ -2,9 +2,10 @@ import { Model } from "sequelize";
 
 const patient = (sequelize, DataTypes) => {
     class Patient extends Model {
-        getProfile() { // this would ideally be implemented with dtos/daos 
-            const {email, first_name, last_name, birthdate, sex} = this;
+        getProfile() { // this would ideally be implemented with dtos/daos if we need to omit certain fields
+            const {id, email, first_name, last_name, birthdate, sex} = this;
             return {
+                id,
                 email, 
                 first_name, 
                 last_name, 

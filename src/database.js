@@ -7,7 +7,7 @@ const config = require(__dirname + '/../config/config.json').db['development']; 
 const username = process.env.POSTGRES_USER;
 const password = process.env.POSTGRES_PASSWORD;
 
-const sequelize = new Sequelize(config.database, username, password, config);
+const sequelize = new Sequelize(config.database, username, password, {...config, logging: env == 'development' });
 
 const models = {};
 const patientModel = patient(sequelize, Sequelize.DataTypes);

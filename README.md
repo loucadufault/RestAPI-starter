@@ -46,9 +46,11 @@ ex: `cd Louca-Dufault` (unix)
 
 `npm test`  
 
-6. Start the development server
+6. Start the server
 
-`npm run dev`
+In development mode (more logging & hot reload): `npm run dev`
+
+In production mode (less logging): `npm start`
 
 7. Access the Rest API
 

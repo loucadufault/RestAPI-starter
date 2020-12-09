@@ -20,9 +20,7 @@ test('create patient', async () => {
         sex: 'male',
     };
     const patient = await models.Patient.create(fields);
-    console.log(patient.toJSON());
     id = patient.id;
-    console.log(id);
 });
 
 test('get patient', async () => {
@@ -48,5 +46,3 @@ test('delete patient', async () => {
 afterAll(async () => {
     await sequelize.close();
 });
-
-test('dsf', () => {console.log('testing')});
