@@ -6,7 +6,6 @@
   "scripts": {
     "start": "NODE_ENV=production babel-node src/index.js",
     "dev": "NODE_ENV=development nodemon --exec babel-node src/index.js",
-    "start:db": "docker run --name postgres-container -e POSTGRES_PASSWORD=root -p 5432:5432 -d postgres",
     "start:backing": "docker-compose up",
     "test": "jest"
   },
