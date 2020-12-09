@@ -20,7 +20,7 @@ router.use('/patients', patients);
 // default route handler middleware
 router.use('*', (req, res, next) => {
     const err = new Error(`Route '${req.originalUrl}' not supported.`);
-    err.status = 404;
+    err.status = 2222;
     err.code = 'ERR_UNSUPPORTED_ROUTE';
 
     next(err);
