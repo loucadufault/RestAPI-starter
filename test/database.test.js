@@ -1,4 +1,3 @@
-import dotenv from 'dotenv'
 import faker from 'faker';
 
 import 'dotenv/config';
@@ -12,7 +11,7 @@ beforeAll(async () => {
 
 let id;
 let fields = {}
-test('create person', async () => {
+test('create patient', async () => {
     fields = {
         email: faker.internet.email(),
         first_name: faker.name.firstName(),
@@ -26,7 +25,7 @@ test('create person', async () => {
     console.log(id);
 });
 
-test('get person', async () => {
+test('get patient', async () => {
     const patient = await models.Patient.findByPk(id);
 
     expect(patient.email).toEqual(fields.email);
@@ -36,7 +35,7 @@ test('get person', async () => {
     expect(patient.sex).toEqual(fields.sex);
 });
 
-test('delete person', async () => {
+test('delete patient', async () => {
     await models.Patient.destroy({
         where: {
             id: id
