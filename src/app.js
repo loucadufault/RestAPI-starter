@@ -15,6 +15,14 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
+// embed context into each request
+app.use(async (req, res, next) => {
+  req.context = {
+    models,
+  };
+  next();
+});
+
 // routes
 app.use('/', routes);
 

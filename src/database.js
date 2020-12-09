@@ -2,8 +2,6 @@ import { Sequelize } from 'sequelize';
 import { patient } from './models';
 
 const env = process.env.NODE_ENV || 'development';
-console.log(env);
-console.log(require(__dirname + '/../config/config.json'));
 const config = require(__dirname + '/../config/config.json').db['development']; //[env];
 
 const username = process.env.POSTGRES_USER;

@@ -9,7 +9,9 @@ class HttpError extends Error {
     constructor({status=DEFAULT_STATUS, detail=DEFAULT_DETAIL, code}) {
         super();
         this.id = uuidv4();
-        this.status = status in http.STATUS_CODES ? status : DEFAULT_STATUS;
+        console.log(status);
+        console.log(status in http.STATUS_CODES);
+        this.status = status.toString() in http.STATUS_CODES ? status : DEFAULT_STATUS;
         this.title = http.STATUS_CODES[this.status];
         this.detail = detail;
         this.code = code;  

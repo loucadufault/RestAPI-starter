@@ -1,51 +1,97 @@
 import { Model } from "sequelize";
 
 const patient = (sequelize, DataTypes) => {
-    class Patient extends Model {}
+    class Patient extends Model {
+        getProfile() {
+            const {email, first_name, last_name, birthdate, sex} = this;
+            return {
+                email, 
+                first_name, 
+                last_name, 
+                birthdate, 
+                sex,
+            };
+        }
+    }
 
     Patient.init({
         id: {
             primaryKey: true,
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
-            allowNull: false,
-            
+            allowNull: false,    
         },
         email: {
             type: DataTypes.STRING,
+            allowNull: false,
+            unique: true,
             validate: {
-                isEmail: true
+                notNull: {
+                    msg: 'Email is required'
+                },
+                notEmpty: {
+                    msg: 'Email must not be empty'
+                },
+                isEmail: {
+                    msg: 'Invalid email format'
+                },
             }
         },
         first_name: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true,
-                isAlpha: true,
+                notNull: {
+                    msg: 'First name is required'
+                },
+                notEmpty: {
+                    msg: 'First name must not be empty'
+                },
+                isAlpha: {
+                    msg: 'First name must be alpha-only'
+                },
             },
         },
         last_name: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true,
-                isAlpha: true,
+                notNull: {
+                    msg: 'Last name is required'
+                },
+                notEmpty: {
+                    msg: 'Last name must not be empty'
+                },
+                isAlpha: {
+                    msg: 'Last name must be alpha-only'
+                },
             },
         },
         birthdate: {
             type: DataTypes.DATEONLY,
             allowNull: false,
             validate: {
-                notEmpty: true,
-                isDate: true,
+                notNull: {
+                    msg: 'Birthdate is required'
+                },
+                notEmpty: {
+                    msg: 'Birthdate must not be empty'
+                },
+                isDate: {
+                    msg: 'Invalid date format'
+                },
             },
         },
         sex: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true,
+                notNull: {
+                    msg: 'Sex is required'
+                },
+                notEmpty: {
+                    msg: 'Sex must not be empty'
+                },
             },
         }
     },
