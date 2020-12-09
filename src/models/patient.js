@@ -2,7 +2,7 @@ import { Model } from "sequelize";
 
 const patient = (sequelize, DataTypes) => {
     class Patient extends Model {
-        getProfile() {
+        getProfile() { // this would ideally be implemented with dtos/daos 
             const {email, first_name, last_name, birthdate, sex} = this;
             return {
                 email, 

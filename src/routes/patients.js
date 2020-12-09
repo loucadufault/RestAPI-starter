@@ -1,11 +1,33 @@
 import { Router } from 'express';
 import HttpError from '../http_error';
+import url from 'url';
 
 const router = Router();
 
 router.get('/', async (req, res) => {
-    const patients = await req.context.models.Patient.findAll();
-    return res.status(200).json(patients);
+    const PAGE_SIZE = 10;
+    let page = 1;
+
+    if ('page' in req.query && ! isNaN(req.query.page)) {
+        const parsedPage = parseInt(req.query.page, 10);
+        if (Number.isInteger(parsedPage) && parsedPage >= 1) {
+           page = parsedPage;
+        }
+    }
+    
+    const fullUrlWithoutQueryString = req.protocol + '://' + req.get('host') + url.parse(req.originalUrl).pathname;
+    const pagination = {
+        self: fullUrlWithoutQueryString + `?page=${page}`, 
+        next: fullUrlWithoutQueryString + `?page=${page + 1}`
+    };
+
+    console.log(`page: ${page}`);
+
+    const patients = await req.context.models.Patient.findAll({ offset: (page - 1) * PAGE_SIZE, limit: PAGE_SIZE });
+    return res.status(200).json({
+        data: patients.map(patient => patient.getProfile()),
+        links: pagination,
+    });
 });
 
 router.get('/:id', async (req, res, next) => {
